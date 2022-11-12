@@ -1,5 +1,9 @@
+import MainPage from '../../pages/mainPage/MainPage';
+
 function App(): JSX.Element {
-  return <p>Hello, world!</p>;
+  return (
+    <MainPage />
+  );
 }
 
 export default App;
