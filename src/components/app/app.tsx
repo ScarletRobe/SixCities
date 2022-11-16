@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../consts';
-import Favorites from '../../pages/favorites/FavoritesPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../consts';
+import FavoritesPage from '../../pages/favorites/FavoritesPage';
 import LoginPage from '../../pages/login/LoginPage';
 import MainPage from '../../pages/main-page/MainPage';
 import NotFoundPage from '../../pages/not-found/NotFoundPage';
 import PropertyPage from '../../pages/property/PropertyPage';
+import PrivateRoute from '../private-route/PrivateRoute';
 
 type AppProps = {
   offersCount: number;
@@ -13,8 +13,6 @@ type AppProps = {
 
 
 function App({offersCount}: AppProps): JSX.Element {
-  const [auth] = useState(false);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -23,7 +21,9 @@ function App({offersCount}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            auth ? <Favorites /> : <Navigate to={'/login'} replace/>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+              <FavoritesPage />
+            </PrivateRoute>
           }
         />
         <Route path={AppRoute.Room} element={<PropertyPage />} />
