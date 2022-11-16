@@ -5,19 +5,31 @@ import LoginPage from '../../pages/login/LoginPage';
 import MainPage from '../../pages/main-page/MainPage';
 import NotFoundPage from '../../pages/not-found/NotFoundPage';
 import PropertyPage from '../../pages/property/PropertyPage';
+import { Offer } from '../../types/offer';
 import PrivateRoute from '../private-route/PrivateRoute';
 
 type AppProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
 
-function App({offersCount}: AppProps): JSX.Element {
+function App({offersCount, offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={AppRoute.Main} element={<MainPage offersCount={offersCount}/>} />
+        <Route
+          path={AppRoute.Main}
+          element={
+            <MainPage
+              offersCount={offersCount}
+              offers={offers}
+            />
+          }
+        />
+
         <Route path={AppRoute.Login} element={<LoginPage />} />
+
         <Route
           path={AppRoute.Favorites}
           element={
@@ -26,7 +38,9 @@ function App({offersCount}: AppProps): JSX.Element {
             </PrivateRoute>
           }
         />
+
         <Route path={AppRoute.Room} element={<PropertyPage />} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

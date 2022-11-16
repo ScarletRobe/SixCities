@@ -1,12 +1,14 @@
 import Header from '../../components/header/Header';
 import Locations from '../../components/locations/Locations';
-import PlaceCard from '../../components/place-card/PlaceCard';
+import PlaceCards from '../../components/place-cards/PlaceCards';
+import { Offer } from '../../types/offer';
 
 type MainPageProps = {
   offersCount: number;
+  offers: Offer[];
 }
 
-function MainPage({offersCount} : MainPageProps): JSX.Element {
+function MainPage({offersCount, offers} : MainPageProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <Header withNav isMainPage/>
@@ -36,15 +38,7 @@ function MainPage({offersCount} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-
-              </div>
+              <PlaceCards offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
