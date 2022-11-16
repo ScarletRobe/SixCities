@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 
 import { AppRoute } from '../../consts';
 
+//TODO: Стили в модуль
 function NotFoundPage():JSX.Element {
   return (
     <div className="page page--gray">
