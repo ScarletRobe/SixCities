@@ -29,7 +29,7 @@ export const offers: Offer[] = [
     ],
     title: 'Loft Studio in the Central Area',
     isFavorite: false,
-    isPremium: false,
+    isPremium: true,
     rating: 2.6,
     type: 'apartment',
     bedrooms: 4,
@@ -88,7 +88,7 @@ export const offers: Offer[] = [
       'https://11.react.pages.academy/static/hotel/15.jpg'
     ],
     title: 'Beautiful & luxurious apartment at great location',
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 4.3,
     type: 'room',
@@ -147,7 +147,7 @@ export const offers: Offer[] = [
       'https://11.react.pages.academy/static/hotel/20.jpg'
     ],
     title: 'House in countryside',
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
     rating: 3.1,
     type: 'room',
