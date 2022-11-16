@@ -14,7 +14,7 @@ function Header({withNav, isMainPage}: HeaderProps) {
           <div className="header__left">
             <Logo type={'header'} isMainPage={isMainPage}/>
           </div>
-          {withNav ? <HeaderNavigation /> : ''}
+          {withNav && <HeaderNavigation />}
         </div>
       </div>
     </header>
