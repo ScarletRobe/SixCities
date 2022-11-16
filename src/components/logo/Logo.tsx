@@ -3,10 +3,10 @@ import { AppRoute } from '../../consts';
 
 type LogoProps = {
   type: 'header' | 'footer';
-  isActive: boolean;
+  isMainPage: boolean;
 }
 
-function Logo({type, isActive = false} : LogoProps): JSX.Element {
+function Logo({type, isMainPage = false} : LogoProps): JSX.Element {
   const styles = {
     header: {
       width: 81,
@@ -19,7 +19,7 @@ function Logo({type, isActive = false} : LogoProps): JSX.Element {
   };
 
   return (
-    <Link className={isActive ? `${type}__logo-link--active ${type}__logo-link` : `${type}__logo-link`} to={AppRoute.Main}>
+    <Link className={isMainPage ? `${type}__logo-link--active ${type}__logo-link` : `${type}__logo-link`} to={AppRoute.Main}>
       <img className={`${type}__logo`} src="img/logo.svg" alt="6 cities logo" width={styles[type].width} height={styles[type].height} />
     </Link>
   );

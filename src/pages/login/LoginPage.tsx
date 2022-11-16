@@ -1,17 +1,9 @@
-import Logo from '../../components/logo/Logo';
+import Header from '../../components/header/Header';
 
 function Login (): JSX.Element {
   return (
     <div className="page page--gray page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Logo type={'header'} isActive={false}/>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header withNav={false} isMainPage={false} />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
