@@ -1,5 +1,5 @@
-import Logo from '../../components/logo/Logo';
 import Header from '../../components/header/Header';
+import Footer from '../../components/footer/Footer';
 
 function Favorites (): JSX.Element {
   return (
@@ -135,9 +135,8 @@ function Favorites (): JSX.Element {
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <Logo type={'footer'} isMainPage={false}/>
-      </footer>
+
+      <Footer isMainPage={false}/>
     </div>
   );
 }
