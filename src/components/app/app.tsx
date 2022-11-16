@@ -39,7 +39,7 @@ function App({offersCount, offers}: AppProps): JSX.Element {
           }
         />
 
-        <Route path={AppRoute.Room} element={<PropertyPage />} />
+        <Route path={AppRoute.Place} element={<PropertyPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
