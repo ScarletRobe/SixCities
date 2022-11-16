@@ -12,3 +12,8 @@ export enum AuthorizationStatus {
 }
 
 export const LOCATIONS = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+
+export enum CardTypes {
+  Main = 'cities',
+  Favorites = 'favorites',
+}
