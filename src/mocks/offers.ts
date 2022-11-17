@@ -28,7 +28,7 @@ export const offers: Offer[] = [
       'https://11.react.pages.academy/static/hotel/11.jpg'
     ],
     title: 'Loft Studio in the Central Area',
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     rating: 2.6,
     type: 'apartment',
