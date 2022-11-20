@@ -4,7 +4,7 @@ import FavoritesPage from '../../pages/favorites/FavoritesPage';
 import LoginPage from '../../pages/login/LoginPage';
 import MainPage from '../../pages/main-page/MainPage';
 import NotFoundPage from '../../pages/not-found/NotFoundPage';
-import PropertyPage from '../../pages/property/PropertyPage';
+import PropertyPage from '../../pages/property-page/PropertyPage';
 import { Offer } from '../../types/offer';
 import PrivateRoute from '../private-route/PrivateRoute';
 
@@ -14,7 +14,7 @@ type AppProps = {
 }
 
 
-function App({offersCount, offers}: AppProps): JSX.Element {
+function App ({offersCount, offers}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
