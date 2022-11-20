@@ -2,13 +2,12 @@ import { Link } from 'react-router-dom';
 import { CardTypes } from '../../consts';
 import { Offer } from '../../types/offer';
 import { capitalizeWord } from '../../utils';
+import Rating from '../UI/Rating';
 
 type PlaceCardProps = {
   offer: Offer;
   cardType: CardTypes;
 }
-
-const STAR_WIDTH = 15;
 
 function PlaceCard({offer: {
   previewImage,
@@ -58,10 +57,7 @@ cardType}: PlaceCardProps): JSX.Element {
             </button>
           </div>
           <div className="place-card__rating rating">
-            <div className="place-card__stars rating__stars">
-              <span style={{width: Math.round(rating) * STAR_WIDTH}}></span>
-              <span className="visually-hidden">Rating</span>
-            </div>
+            <Rating rating={rating} type='place-card' />
           </div>
           <h2 className="place-card__name">
             <span>{title}</span>
