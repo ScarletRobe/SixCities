@@ -7,9 +7,19 @@ type PlaceCardsProps = {
   cardType: CardTypes;
 }
 
+type Class = {
+  [key: string]: string;
+}
+
 function PlaceCards({offers, cardType}: PlaceCardsProps) {
+  const Classes: Class = {
+    [CardTypes.Main]: 'cities__places-list places__list tabs__content',
+    [CardTypes.Favorites]: 'favorites__places',
+    [CardTypes.Property]: 'near-places__list places__list'
+  };
+
   return (
-    <div className={cardType === CardTypes.Main ? 'cities__places-list places__list tabs__content' : 'favorites__places'}>
+    <div className={Classes[cardType]}>
       {offers.map((offer) => (
         <PlaceCard
           cardType={cardType}

@@ -9,6 +9,14 @@ type PlaceCardProps = {
   cardType: CardTypes;
 }
 
+type Style = {
+  [key: string]: {
+    width: number;
+    height: number;
+    className: string;
+  };
+}
+
 function PlaceCard({offer: {
   previewImage,
   price,
@@ -20,30 +28,39 @@ function PlaceCard({offer: {
   type,
 },
 cardType}: PlaceCardProps): JSX.Element {
-  const styles = {
+  const Styles: Style = {
     [CardTypes.Main]: {
       width: 260,
       height: 200,
+      className: 'cities',
+    },
+    [CardTypes.Property]: {
+      width: 260,
+      height: 200,
+      className: 'near-places',
     },
     [CardTypes.Favorites]: {
       width: 150,
       height: 110,
-    },
+      className: 'favorites',
+    }
   };
 
+  const className = Styles[cardType].className;
+
   return (
-    <Link to={`/place/${id}`} className={`${cardType}__card place-card`}>
-      <article className={`${cardType}__card place-card`}>
+    <Link to={`/place/${id}`} className={`${className}__card place-card`}>
+      <article className={`${className}__card place-card`}>
         {
           isPremium &&
           <div className="place-card__mark">
             <span>Premium</span>
           </div>
         }
-        <div className={`${cardType}__image-wrapper place-card__image-wrapper`}>
-          <img className="place-card__image" src={previewImage} width={styles[cardType].width} height={styles[cardType].height} alt="Place" />
+        <div className={`${className}__image-wrapper place-card__image-wrapper`}>
+          <img className="place-card__image" src={previewImage} width={Styles[cardType].width} height={Styles[cardType].height} alt="Place" />
         </div>
-        <div className={cardType === CardTypes.Main ? 'place-card__info' : 'favorites__card-info place-card__info'}>
+        <div className={className === CardTypes.Main ? 'place-card__info' : 'favorites__card-info place-card__info'}>
           <div className="place-card__price-wrapper">
             <div className="place-card__price">
               <b className="place-card__price-value">&euro;{price}</b>
