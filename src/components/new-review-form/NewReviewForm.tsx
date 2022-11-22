@@ -5,20 +5,15 @@ import ReviewStars from './ReviewStars';
 const MIN_REVIEW_LENGTH = 50;
 
 type ReviewDataState = {
-  rating: null | string;
+  rating: string;
   review: string;
 }
 
-function validateForm ({rating, review}: ReviewDataState) {
-  if (!rating) {return false;}
-  if (review.length <= MIN_REVIEW_LENGTH) {return false;}
-
-  return true;
-}
+const validateForm = ({rating, review}: ReviewDataState) => ((rating !== '0') && (review.length >= MIN_REVIEW_LENGTH));
 
 function NewReviewForm (): JSX.Element {
   const [reviewData, setReviewData] = useState<ReviewDataState>({
-    rating: null,
+    rating: '0',
     review: '',
   });
 
