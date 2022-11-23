@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import Header from '../../components/header/Header';
 import Locations from '../../components/locations/Locations';
+import Map from '../../components/map/Map';
 import PlaceCards from '../../components/place-cards/PlaceCards';
 import { CardTypes } from '../../consts';
 import { Offer } from '../../types/offer';
@@ -10,6 +12,10 @@ type MainPageProps = {
 }
 
 function MainPage({offersCount, offers} : MainPageProps): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+
+  const cardHoverHandler = (offerId: number | null) => setActiveCardId(offerId);
+
   return (
     <div className="page page--gray page--main">
       <Header withNav isMainPage/>
@@ -39,10 +45,19 @@ function MainPage({offersCount, offers} : MainPageProps): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlaceCards cardType={CardTypes.Main} offers={offers}/>
+              <PlaceCards
+                cardType={CardTypes.Main}
+                offers={offers}
+                cardHoverHandler={cardHoverHandler}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                city={offers[0].city}
+                offers={offers}
+                activeCardId={activeCardId}
+                type='cities'
+              />
             </div>
           </div>
         </div>

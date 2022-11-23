@@ -7,6 +7,7 @@ import Rating from '../UI/Rating';
 type PlaceCardProps = {
   offer: Offer;
   cardType: CardTypes;
+  cardHoverHandler?: (offerId: number | null) => void;
 }
 
 type Style = {
@@ -27,7 +28,8 @@ function PlaceCard({offer: {
   id,
   type,
 },
-cardType}: PlaceCardProps): JSX.Element {
+cardType,
+cardHoverHandler}: PlaceCardProps): JSX.Element {
   const Styles: Style = {
     [CardTypes.Main]: {
       width: 260,
@@ -49,7 +51,12 @@ cardType}: PlaceCardProps): JSX.Element {
   const className = Styles[cardType].className;
 
   return (
-    <Link to={`/place/${id}`} className={`${className}__card place-card`}>
+    <Link
+      to={`/place/${id}`}
+      className={`${className}__card place-card`}
+      onMouseEnter={() => cardHoverHandler?.(id)}
+      onMouseLeave={() => cardHoverHandler?.(null)}
+    >
       <article className={`${className}__card place-card`}>
         {
           isPremium &&

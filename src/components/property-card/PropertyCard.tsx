@@ -8,12 +8,21 @@ import Reviews from '../reviews/Reviews';
 import PlaceCards from '../place-cards/PlaceCards';
 import { offers } from '../../mocks/offers';
 import { CardTypes } from '../../consts';
+import Map from '../map/Map';
+import { useState } from 'react';
 
 type PropertyCardProps = {
   offer: Offer;
 }
 
 function PropertyCard({offer}: PropertyCardProps): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<number | null>(offer.id);
+
+  const cardHoverHandler = (offerId: number | null) => {
+    if (!offerId) {setActiveCardId(offer.id);}
+    else {setActiveCardId(offerId);}
+  };
+
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -66,12 +75,19 @@ function PropertyCard({offer}: PropertyCardProps): JSX.Element {
             <Reviews />
           </div>
         </div>
-        <section className="property__map map"></section>
+        <div style={{display: 'flex', justifyContent: 'center'}}>
+          <Map
+            city={offer.city}
+            offers={offers}
+            activeCardId={activeCardId}
+            type='property'
+          />
+        </div>
       </section>
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <PlaceCards offers={offers.slice(0,3)} cardType={CardTypes.Property}/>
+          <PlaceCards offers={offers.slice(0,3)} cardType={CardTypes.Property} cardHoverHandler={cardHoverHandler}/>
         </section>
       </div>
     </main>
