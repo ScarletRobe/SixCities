@@ -77,9 +77,10 @@ function PropertyCard({offer}: PropertyCardProps): JSX.Element {
         </div>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <Map
-            city={offer.city}
+            location={offer.location}
             offers={offers}
             activeCardId={activeCardId}
+            setActiveCardId={setActiveCardId}
             type='property'
           />
         </div>

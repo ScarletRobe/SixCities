@@ -4,19 +4,22 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { Markers } from '../../consts';
-import { Offer, City } from '../../types/offer';
+import { Location, Offer } from '../../types/offer';
 import useMap from '../../hooks/useMap';
+import { useNavigate } from 'react-router-dom';
 
 type MapProps = {
-  city: City;
+  location: Location;
   offers: Offer[];
   activeCardId: number | null;
+  setActiveCardId?: (id: number) => void;
   type: 'property' | 'cities';
 }
 
-function Map({ city, offers, activeCardId, type }: MapProps): JSX.Element {
+function Map({ location, offers, activeCardId, setActiveCardId, type }: MapProps): JSX.Element {
+  const navigate = useNavigate();
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city.location);
+  const map = useMap(mapRef, location);
 
   const defaultCustomMarker = leaflet.icon({
     iconUrl: Markers.Default,
@@ -32,17 +35,21 @@ function Map({ city, offers, activeCardId, type }: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      offers.forEach(({ location, id }) => {
-        leaflet
+      offers.forEach(({ location: loc, id }) => {
+        const marker = leaflet
           .marker({
-            lat: location.latitude,
-            lng: location.longitude,
+            lat: loc.latitude,
+            lng: loc.longitude,
           }, {
             icon: (id === activeCardId)
               ? currentCustomMarker
               : defaultCustomMarker,
-          })
-          .addTo(map);
+          });
+        marker.on('click', () => {
+          setActiveCardId?.(id);
+          navigate(`/place/${id}`, { replace: true });
+        });
+        marker.addTo(map);
       });
     }
   }, [map, offers, activeCardId]);
