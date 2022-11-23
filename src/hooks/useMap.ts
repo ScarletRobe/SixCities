@@ -4,6 +4,7 @@ import leaflet, { Map } from 'leaflet';
 
 import { Location } from '../types/offer';
 import { TileLayerConfig } from '../consts';
+import L from 'leaflet';
 
 function useMap(
   mapRef: MutableRefObject<HTMLEmbedElement | null>,
@@ -13,6 +14,9 @@ function useMap(
   const isRenderedRef = useRef(false);
 
   useEffect(() => {
+    if (map) {
+      map.setView(new L.LatLng(location.latitude, location.longitude), location.zoom);
+    }
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = new Map(mapRef.current, {
         center: {
