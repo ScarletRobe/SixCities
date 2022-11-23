@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../consts';
 import FavoritesPage from '../../pages/favorites/FavoritesPage';
@@ -7,6 +8,7 @@ import NotFoundPage from '../../pages/not-found/NotFoundPage';
 import PropertyPage from '../../pages/property-page/PropertyPage';
 import { Offer } from '../../types/offer';
 import PrivateRoute from '../private-route/PrivateRoute';
+import ScrollToTop from '../scrollToTop/ScrollToTop';
 
 type AppProps = {
   offersCount: number;
@@ -39,7 +41,14 @@ function App ({offersCount, offers}: AppProps): JSX.Element {
           }
         />
 
-        <Route path={AppRoute.Place} element={<PropertyPage />} />
+        <Route path={AppRoute.Place}
+          element={
+            <React.Fragment>
+              <ScrollToTop />
+              <PropertyPage />
+            </React.Fragment>
+          }
+        />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

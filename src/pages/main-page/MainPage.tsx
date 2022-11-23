@@ -53,7 +53,7 @@ function MainPage({offersCount, offers} : MainPageProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
-                city={offers[0].city}
+                location={offers[0].location}
                 offers={offers}
                 activeCardId={activeCardId}
                 type='cities'
