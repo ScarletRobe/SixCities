@@ -1,12 +1,15 @@
 import { useEffect, useRef } from 'react';
+import * as ReactDOMServer from 'react-dom/server';
 
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import { Markers } from '../../consts';
+import { CardTypes, Markers } from '../../consts';
 import { Location, Offer } from '../../types/offer';
 import useMap from '../../hooks/useMap';
 import { useNavigate } from 'react-router-dom';
+import L from 'leaflet';
+import PlaceCard from '../place-card/PlaceCard';
 
 type MapProps = {
   location: Location;
@@ -35,20 +38,27 @@ function Map({ location, offers, activeCardId, setActiveCardId, type }: MapProps
 
   useEffect(() => {
     if (map) {
-      offers.forEach(({ location: loc, id }) => {
+      offers.forEach((offer) => {
         const marker = leaflet
           .marker({
-            lat: loc.latitude,
-            lng: loc.longitude,
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
           }, {
-            icon: (id === activeCardId)
+            icon: (offer.id === activeCardId)
               ? currentCustomMarker
               : defaultCustomMarker,
           });
         marker.on('click', () => {
-          setActiveCardId?.(id);
-          navigate(`/place/${id}`, { replace: true });
+          setActiveCardId?.(offer.id);
+          navigate(`/place/${offer.id}`, { replace: true });
         });
+        marker.bindPopup(ReactDOMServer.renderToString(
+          <PlaceCard offer={offer} cardType={CardTypes.MarkerPopup} />
+        ), {'offset': L.point(0,-30)});
+        marker.on('mouseover', () => {
+          marker.openPopup();
+        });
+
         marker.addTo(map);
       });
     }
