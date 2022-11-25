@@ -16,7 +16,8 @@ export const LOCATIONS = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg'
 export enum CardTypes {
   Main = 'cities',
   Favorites = 'favorites',
-  Property = 'property'
+  Property = 'property',
+  MarkerPopup = 'marker'
 }
 
 export enum TileLayerConfig {
