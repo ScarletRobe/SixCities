@@ -1,6 +1,6 @@
 type RatingProps = {
   rating: number;
-  type: 'place-card' | 'property';
+  type: 'place-card' | 'property' | 'reviews';
   round?: boolean;
 }
 
