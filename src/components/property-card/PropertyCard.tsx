@@ -10,12 +10,14 @@ import { offers } from '../../mocks/offers';
 import { CardTypes } from '../../consts';
 import Map from '../map/Map';
 import { useState } from 'react';
+import { Comment } from '../../types/comment';
 
 type PropertyCardProps = {
   offer: Offer;
+  reviews: Comment[];
 }
 
-function PropertyCard({offer}: PropertyCardProps): JSX.Element {
+function PropertyCard({offer, reviews}: PropertyCardProps): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<number | null>(offer.id);
 
   const cardHoverHandler = (offerId: number | null) => {
@@ -72,7 +74,7 @@ function PropertyCard({offer}: PropertyCardProps): JSX.Element {
               <PropertyInsideList goods={offer.goods}/>
             </div>
             <HostProfile host={offer.host} description={offer.description} />
-            <Reviews />
+            <Reviews reviews={reviews}/>
           </div>
         </div>
         <div style={{display: 'flex', justifyContent: 'center'}}>
