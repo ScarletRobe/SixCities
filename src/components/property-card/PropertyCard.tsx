@@ -80,7 +80,6 @@ function PropertyCard({offer, reviews}: PropertyCardProps): JSX.Element {
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <Map
             location={offer.location}
-            offers={offers}
             activeCardId={activeCardId}
             setActiveCardId={setActiveCardId}
             type='property'

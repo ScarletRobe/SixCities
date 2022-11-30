@@ -2,23 +2,23 @@ import Header from '../../components/header/Header';
 import Footer from '../../components/footer/Footer';
 import PlaceCards from '../../components/place-cards/PlaceCards';
 import { CardTypes } from '../../consts';
-import { offers } from '../../mocks/offers';
 import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../hooks/redux';
 
 type FavoritesOffers = {
   [key: string]: Offer[];
 }
 
 function Favorites (): JSX.Element {
+  const favoriteOffers = useAppSelector((state) => state.appReducer.favoriteOffers);
+
   const getFavoritesPlacesFromOffers = () => {
     const result: FavoritesOffers = {};
-    offers.forEach((offer) => {
-      if (offer.isFavorite) {
-        if (result?.[offer.city.name]?.length) {
-          result[offer.city.name].push(offer);
-        } else {
-          result[offer.city.name] = [offer];
-        }
+    favoriteOffers.forEach((offer) => {
+      if (result?.[offer.city.name]?.length) {
+        result[offer.city.name].push(offer);
+      } else {
+        result[offer.city.name] = [offer];
       }
     });
     return result;

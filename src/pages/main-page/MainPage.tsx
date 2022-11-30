@@ -4,14 +4,12 @@ import Locations from '../../components/locations/Locations';
 import Map from '../../components/map/Map';
 import PlaceCards from '../../components/place-cards/PlaceCards';
 import { CardTypes } from '../../consts';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../hooks/redux';
 
-type MainPageProps = {
-  offersCount: number;
-  offers: Offer[];
-}
+function MainPage(): JSX.Element {
+  const city = useAppSelector((state) => state.appReducer.city);
+  const offers = useAppSelector((state) => state.appReducer.offersByCity);
 
-function MainPage({offersCount, offers} : MainPageProps): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
 
   const cardHoverHandler = (offerId: number | null) => setActiveCardId(offerId);
@@ -23,13 +21,13 @@ function MainPage({offersCount, offers} : MainPageProps): JSX.Element {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <Locations currentLocation='Amsterdam'/>
+          <Locations />
         </div>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersCount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in {city.name}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -53,8 +51,7 @@ function MainPage({offersCount, offers} : MainPageProps): JSX.Element {
             </section>
             <div className="cities__right-section">
               <Map
-                location={offers[0].location}
-                offers={offers}
+                location={city.location}
                 activeCardId={activeCardId}
                 type='cities'
               />
