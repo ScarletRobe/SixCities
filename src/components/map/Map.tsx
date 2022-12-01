@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import L from 'leaflet';
 import PlaceCard from '../place-card/PlaceCard';
 import { useAppSelector } from '../../hooks/redux';
+import React from 'react';
 
 type MapProps = {
   location: Location;
@@ -75,4 +76,4 @@ function Map({ location, activeCardId, setActiveCardId, type }: MapProps): JSX.E
   );
 }
 
-export default Map;
+export default React.memo(Map);
