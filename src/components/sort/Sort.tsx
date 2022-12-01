@@ -1,9 +1,13 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { SortOptions } from '../../consts';
 
-function Sort () {
+type SortProps = {
+  activeSortOption: string;
+  setActiveSortOption: Dispatch<SetStateAction<string>>;
+}
+
+function Sort ({activeSortOption, setActiveSortOption}: SortProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [activeOption, setActiveOption] = useState<string>(SortOptions.Popular);
 
   return (
     <form
@@ -15,7 +19,7 @@ function Sort () {
     >
       <span className="places__sorting-caption">Sort by </span>
       <span className="places__sorting-type" tabIndex={0}>
-        {activeOption}
+        {activeSortOption}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -27,9 +31,9 @@ function Sort () {
           Object.values(SortOptions).map((option) => (
             <li
               key={option}
-              className={`places__option ${option === activeOption ? 'places__option--active' : ''}`}
+              className={`places__option ${option === activeSortOption ? 'places__option--active' : ''}`}
               tabIndex={0}
-              onClick={() => setActiveOption(option)}
+              onClick={() => setActiveSortOption(option)}
             >
               {option}
             </li>
