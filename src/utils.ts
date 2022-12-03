@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { LOCATIONS } from './consts';
 import { Offer, City } from './types/offer';
 export const capitalizeWord = (text: string) => text[0].toUpperCase() + text.slice(1);
@@ -16,4 +17,39 @@ export const findCityByName = (cityName: string): City => {
     throw new Error('Unknown city name');
   }
   return city;
+};
+
+export const debounce = function <T extends (...args: any[]) => void>(
+  cb: T,
+  timeoutDelay = 250,
+  immediate = true
+) {
+  let timeoutId: ReturnType<typeof setTimeout> | null;
+
+  return function <U>(this: U, ...rest: Parameters<typeof cb>) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const context = this;
+
+    const executeLater = function() {
+      timeoutId = null;
+      cb.apply(context, rest);
+    };
+
+    const callNow = immediate && !timeoutId;
+    if (typeof timeoutId === 'number') {
+      clearTimeout(timeoutId);
+    }
+
+    if (callNow) {
+      cb.apply(context, rest);
+
+      timeoutId = setTimeout(
+        () => {
+          timeoutId = null;
+        },
+        timeoutDelay);
+    } else {
+      timeoutId = setTimeout(executeLater, timeoutDelay);
+    }
+  };
 };
