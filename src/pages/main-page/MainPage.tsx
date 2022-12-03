@@ -1,22 +1,11 @@
-import { useState } from 'react';
 import Header from '../../components/header/Header';
 import Locations from '../../components/locations/Locations';
-import Map from '../../components/map/Map';
-import PlaceCards from '../../components/place-cards/PlaceCards';
-import Sort from '../../components/sort/Sort';
-import { CardTypes, SortOptions } from '../../consts';
+import EmptyOffersSection from '../../components/offersSection/EmptyOffersSection';
+import OffersSection from '../../components/offersSection/OffersSection';
 import { useAppSelector } from '../../hooks/redux';
-import { useSortedOffers } from '../../hooks/useSortedOffers';
 
 function MainPage(): JSX.Element {
-  const city = useAppSelector((state) => state.appReducer.city);
-  const offers = useAppSelector((state) => state.appReducer.offersByCity);
-
-  const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  const [activeSortOption, setActiveSortOption] = useState<string>(SortOptions.Popular);
-  const sortedOffers = useSortedOffers(activeSortOption, offers);
-
-  const cardHoverHandler = (offerId: number | null) => setActiveCardId(offerId);
+  const currentCityOffers = useAppSelector((state) => state.appReducer.offersByCity);
 
   return (
     <div className="page page--gray page--main">
@@ -25,35 +14,18 @@ function MainPage(): JSX.Element {
         isMainPage
       />
 
-      <main className="page__main page__main--index">
+      <main
+        className={`page__main page__main--index ${currentCityOffers.length ? '' : 'page__main--index-empty'}`}
+      >
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <Locations />
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {city.name}</b>
-              <Sort
-                activeSortOption={activeSortOption}
-                setActiveSortOption={setActiveSortOption}
-              />
-              <PlaceCards
-                cardType={CardTypes.Main}
-                offers={sortedOffers}
-                cardHoverHandler={cardHoverHandler}
-              />
-            </section>
-            <div className="cities__right-section">
-              <Map
-                location={city.location}
-                activeCardId={activeCardId}
-                type='cities'
-              />
-            </div>
-          </div>
-        </div>
+        {
+          currentCityOffers.length
+            ? <OffersSection />
+            : <EmptyOffersSection />
+        }
       </main>
     </div>
   );
