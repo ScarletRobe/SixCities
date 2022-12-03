@@ -2,18 +2,15 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LOCATIONS } from '../../consts';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
-import { city, offersByCity } from '../../store/appSlice';
+import { city } from '../../store/appSlice';
 import { City } from '../../types/offer';
-import { findOffersByCity } from '../../utils';
 
 function Locations(): JSX.Element {
   const currentLocation = useAppSelector((state) => state.appReducer.city);
-  const offers = useAppSelector((state) => state.appReducer.allOffers);
   const dispatch = useAppDispatch();
 
   const clickHandler = (location: City) => {
     dispatch(city(location));
-    dispatch(offersByCity(findOffersByCity(location.name, offers)));
   };
 
   return (
