@@ -37,9 +37,11 @@ function Map({ location, activeCardId, setActiveCardId, type }: MapProps): JSX.E
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
   const offers = useAppSelector((state) => state.appReducer.offersByCity);
+  const markerGroup = leaflet.layerGroup();
 
   useEffect(() => {
     if (map) {
+      markerGroup.addTo(map);
       offers.forEach((offer) => {
         const marker = leaflet
           .marker({
@@ -61,9 +63,15 @@ function Map({ location, activeCardId, setActiveCardId, type }: MapProps): JSX.E
           marker.openPopup();
         });
 
-        marker.addTo(map);
+        marker.addTo(markerGroup);
       });
     }
+
+    return () => {
+      if (map) {
+        map.removeLayer(markerGroup);
+      }
+    };
   }, [map, offers, activeCardId]);
 
   return (
