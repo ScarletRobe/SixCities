@@ -7,18 +7,15 @@ import MainPage from '../../pages/main-page/MainPage';
 import NotFoundPage from '../../pages/not-found/NotFoundPage';
 import PropertyPage from '../../pages/property-page/PropertyPage';
 import { Comment } from '../../types/comment';
-import { Offer } from '../../types/offer';
 import PrivateRoute from '../private-route/PrivateRoute';
 import ScrollToTop from '../scrollToTop/ScrollToTop';
 
 type AppProps = {
-  offersCount: number;
-  offers: Offer[];
   reviews: Comment[];
 }
 
 
-function App ({offersCount, offers, reviews}: AppProps): JSX.Element {
+function App ({reviews}: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
