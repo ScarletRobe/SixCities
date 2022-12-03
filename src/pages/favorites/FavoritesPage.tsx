@@ -3,7 +3,10 @@ import Footer from '../../components/footer/Footer';
 import PlaceCards from '../../components/place-cards/PlaceCards';
 import { CardTypes } from '../../consts';
 import { Offer } from '../../types/offer';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { Link } from 'react-router-dom';
+import { city } from '../../store/appSlice';
+import { findCityByName } from '../../utils';
 
 type FavoritesOffers = {
   [key: string]: Offer[];
@@ -11,6 +14,7 @@ type FavoritesOffers = {
 
 function Favorites (): JSX.Element {
   const favoriteOffers = useAppSelector((state) => state.appReducer.favoriteOffers);
+  const dispatch = useAppDispatch();
 
   const getFavoritesPlacesFromOffers = () => {
     const result: FavoritesOffers = {};
@@ -35,17 +39,21 @@ function Favorites (): JSX.Element {
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
 
-              {Object.keys(favoritesPlaces).map((city) => (
-                <li key={city} className="favorites__locations-items">
+              {Object.keys(favoritesPlaces).map((town) => (
+                <li key={town} className="favorites__locations-items">
                   <div className="favorites__locations locations locations--current">
                     <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
+                      <Link
+                        className="locations__item-link"
+                        to="/"
+                        onClick={() => dispatch(city(findCityByName(town)))}
+                      >
+                        <span>{town}</span>
+                      </Link>
                     </div>
                   </div>
                   <div className="favorites__places">
-                    <PlaceCards cardType={CardTypes.Favorites} offers={favoritesPlaces[city]}/>
+                    <PlaceCards cardType={CardTypes.Favorites} offers={favoritesPlaces[town]}/>
                   </div>
                 </li>
               ))}
