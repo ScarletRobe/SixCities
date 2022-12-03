@@ -24,6 +24,7 @@ export const appSlice = createSlice({
   reducers: {
     city: (state, action: PayloadAction<City>) => {
       state.city = action.payload;
+      state.offersByCity = findOffersByCity(action.payload.name, offers);
     },
     allOffers: (state, action: PayloadAction<Offer[]>) => {
       state.allOffers = action.payload;
