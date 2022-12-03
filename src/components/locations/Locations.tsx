@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { LOCATIONS } from '../../consts';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
@@ -38,4 +39,4 @@ function Locations(): JSX.Element {
   );
 }
 
-export default Locations;
+export default React.memo(Locations);
