@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useState } from 'react';
 import Header from '../../components/header/Header';
 import Locations from '../../components/locations/Locations';
@@ -7,7 +6,7 @@ import PlaceCards from '../../components/place-cards/PlaceCards';
 import Sort from '../../components/sort/Sort';
 import { CardTypes, SortOptions } from '../../consts';
 import { useAppSelector } from '../../hooks/redux';
-import { Offer } from '../../types/offer';
+import { useSortedOffers } from '../../hooks/useSortedOffers';
 
 function MainPage(): JSX.Element {
   const city = useAppSelector((state) => state.appReducer.city);
@@ -15,27 +14,7 @@ function MainPage(): JSX.Element {
 
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const [activeSortOption, setActiveSortOption] = useState<string>(SortOptions.Popular);
-  const [sortedOffers, setSortedOffers] = useState<Offer[]>(offers);
-
-  useEffect(() => {
-    const result: Offer[] = [...offers];
-    switch (activeSortOption) {
-      case SortOptions.Popular:
-        break;
-      case SortOptions.HighToLow:
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case SortOptions.LowToHigh:
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case SortOptions.TopRated:
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      default:
-        throw new Error('Unknown type of sort');
-    }
-    setSortedOffers(result);
-  }, [activeSortOption, offers]);
+  const sortedOffers = useSortedOffers(activeSortOption, offers);
 
   const cardHoverHandler = (offerId: number | null) => setActiveCardId(offerId);
 
