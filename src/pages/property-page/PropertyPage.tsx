@@ -1,7 +1,7 @@
 import { Navigate, useParams } from 'react-router-dom';
 import Header from '../../components/header/Header';
 import PropertyCard from '../../components/property-card/PropertyCard';
-import { offers } from '../../mocks/offers';
+import { useAppSelector } from '../../hooks/redux';
 import { Comment } from '../../types/comment';
 
 type PropertyPageParams = {
@@ -13,6 +13,8 @@ type PropertyPageProps = {
 }
 
 function Property ({reviews}: PropertyPageProps): JSX.Element {
+  const offers = useAppSelector((state) => state.appReducer.allOffers);
+
   const params = useParams<PropertyPageParams>();
   const offer = offers.find((o) => o.id === Number(params.id));
 
