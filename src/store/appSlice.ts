@@ -1,5 +1,5 @@
+import { fetchOffers } from './apiActions';
 import { AuthorizationStatus } from './../consts';
-// import { offers } from './../mocks/offers';
 import { findFavoriteOffers, findOffersByCity } from './../utils';
 import { Offer, City } from './../types/offer';
 import { defaultCity } from '../consts';
@@ -42,6 +42,15 @@ export const appSlice = createSlice({
       state.authorizationStatus = action.payload;
     }
   },
+  extraReducers: {
+    [fetchOffers.fulfilled.type]: (state: InitialState, action: PayloadAction<Offer[]>) => {
+      state.allOffers = action.payload;
+      state.offersByCity = findOffersByCity(state.city.name, action.payload);
+
+    },
+    // [fetchOffers.rejected]:
+    // [fetchOffers.fulfilled]:
+  }
 });
 
 export const {city, allOffers, offersByCity, favoriteOffers, authorizationStatus} = appSlice.actions;
