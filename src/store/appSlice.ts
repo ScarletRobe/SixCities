@@ -11,14 +11,18 @@ type InitialState = {
   offersByCity: Offer[];
   favoriteOffers: Offer[];
   authorizationStatus: AuthorizationStatus;
+  loadingError: string | null;
+  isLoading: boolean;
 }
 
 const initialState: InitialState = {
   city: defaultCity,
   allOffers: [],
-  offersByCity: findOffersByCity(defaultCity.name, []),
-  favoriteOffers: findFavoriteOffers([]),
+  offersByCity: [],
+  favoriteOffers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
+  loadingError: '',
+  isLoading: false,
 };
 
 export const appSlice = createSlice({
@@ -46,10 +50,18 @@ export const appSlice = createSlice({
     [fetchOffers.fulfilled.type]: (state: InitialState, action: PayloadAction<Offer[]>) => {
       state.allOffers = action.payload;
       state.offersByCity = findOffersByCity(state.city.name, action.payload);
-
+      state.favoriteOffers = findFavoriteOffers(action.payload);
+      state.loadingError = null;
+      state.isLoading = false;
     },
-    // [fetchOffers.rejected]:
-    // [fetchOffers.fulfilled]:
+    [fetchOffers.rejected.type]: (state: InitialState, action: PayloadAction<string>) => {
+      state.loadingError = action.payload;
+      state.isLoading = false;
+    },
+    [fetchOffers.pending.type]: (state: InitialState) => {
+      state.loadingError = null;
+      state.isLoading = true;
+    },
   }
 });
 
