@@ -1,8 +1,10 @@
 export enum AppRoute {
   Main = '/',
-  Favorites = 'favorites',
+  Favorites = '/favorites',
   Login = '/login',
+  Logout = '/logout',
   Place = '/place/:id',
+  Offers = '/hotels',
 }
 
 export enum AuthorizationStatus {
@@ -79,11 +81,17 @@ export enum Markers {
   Current = 'img/pin-active.svg',
 }
 
-export const defaultCity = LOCATIONS[2];
+export const defaultCity = LOCATIONS[0];
 
 export enum SortOptions {
   Popular = 'Popular',
   LowToHigh = 'Price: low to high',
   HighToLow = 'Price: high to low',
   TopRated = 'Top rated first'
+}
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
 }
