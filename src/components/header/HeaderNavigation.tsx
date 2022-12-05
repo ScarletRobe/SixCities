@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
 
 function HeaderNavigation() {
+  const favoriteOffers = useAppSelector((state) => state.appReducer.favoriteOffers);
+
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
@@ -9,7 +12,7 @@ function HeaderNavigation() {
             <div className="header__avatar-wrapper user__avatar-wrapper">
             </div>
             <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-            <span className="header__favorite-count">3</span>
+            <span className="header__favorite-count">{favoriteOffers.length}</span>
           </Link>
         </li>
         <li className="header__nav-item">
