@@ -5,8 +5,12 @@ import { api } from '../services/api';
 
 export const fetchOffers = createAsyncThunk(
   'data/fetchOffers',
-  async () => {
-    const response = await api.get<Offer[]>(APIRoute.Offers);
-    return response.data;
+  async (_, thunkAPI) => {
+    try {
+      const response = await api.get<Offer[]>(APIRoute.Offers);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue('Не удалось загрузить предложения. Попробуйте позже');
+    }
   }
 );
