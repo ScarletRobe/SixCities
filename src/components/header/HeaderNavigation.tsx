@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { logout } from '../../store/apiActions';
 
 function HeaderNavigation() {
   const favoriteOffers = useAppSelector((state) => state.appReducer.favoriteOffers);
+  const dispatch = useAppDispatch();
 
   return (
     <nav className="header__nav">
@@ -16,9 +18,16 @@ function HeaderNavigation() {
           </Link>
         </li>
         <li className="header__nav-item">
-          <a className="header__nav-link" href="#">
-            <span className="header__signout">Sign out</span>
-          </a>
+          <div className="header__nav-link">
+            <span
+              className="header__signout"
+              onClick={() => {
+                dispatch(logout());
+              }}
+            >
+              Sign out
+            </span>
+          </div>
         </li>
       </ul>
     </nav>
