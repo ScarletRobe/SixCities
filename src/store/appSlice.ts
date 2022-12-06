@@ -1,4 +1,5 @@
-import { fetchOffers } from './apiActions';
+// import { Token } from './../services/token';
+import { checkAuth, fetchOffers, login, logout } from './apiActions';
 import { AuthorizationStatus } from './../consts';
 import { findFavoriteOffers, findOffersByCity } from './../utils';
 import { Offer, City } from './../types/offer';
@@ -61,6 +62,15 @@ export const appSlice = createSlice({
     [fetchOffers.pending.type]: (state: InitialState) => {
       state.loadingError = null;
       state.isLoading = true;
+    },
+    [checkAuth.fulfilled.type]: (state: InitialState, action: PayloadAction<AuthorizationStatus>) => {
+      state.authorizationStatus = action.payload;
+    },
+    [login.fulfilled.type]: (state: InitialState, action: PayloadAction<AuthorizationStatus>) => {
+      state.authorizationStatus = action.payload;
+    },
+    [logout.fulfilled.type]: (state: InitialState, action: PayloadAction<AuthorizationStatus>) => {
+      state.authorizationStatus = action.payload;
     },
   }
 });
