@@ -1,6 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { LOCATIONS } from './consts';
 import { Offer, City } from './types/offer';
+
+export const getRandomPositiveInteger = (min: number, max = 0) => {
+  if (max < 0 || min < 0 || max % 1 !== 0 || min % 1 !== 0) {
+    throw new Error('Задан некорректный диапазон');
+  }
+  if (max < min) {
+    [min, max] = [max, min];
+  }
+  return Math.abs(Math.round(min - 0.5 + Math.random() * (max - min + 1)));
+};
+
 export const capitalizeWord = (text: string) => text[0].toUpperCase() + text.slice(1);
 
 export const findOffersByCity = (city: string, offers: Offer[]): Offer[] | [] => (
