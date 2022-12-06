@@ -1,6 +1,15 @@
+import { Link } from 'react-router-dom';
 import Header from '../../components/header/Header';
+import { LOCATIONS } from '../../consts';
+import { useAppDispatch } from '../../hooks/redux';
+import { city } from '../../store/appSlice';
+import { findCityByName, getRandomPositiveInteger } from '../../utils';
 
 function Login (): JSX.Element {
+  const dispatch = useAppDispatch();
+  // const authorizationStatus = useAppSelector((state) => state.appReducer.authorizationStatus);
+  const randomCity = LOCATIONS[getRandomPositiveInteger(LOCATIONS.length)].name;
+
   return (
     <div className="page page--gray page--login">
       <Header withNav={false} isMainPage={false} />
@@ -23,9 +32,15 @@ function Login (): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
-                <span>Amsterdam</span>
-              </a>
+              <Link
+                className="locations__item-link"
+                to="/"
+                onClick={() => {
+                  dispatch(city(findCityByName(randomCity)));
+                }}
+              >
+                <span>{randomCity}</span>
+              </Link>
             </div>
           </section>
         </div>
