@@ -1,35 +1,18 @@
-import { Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { logout } from '../../store/apiActions';
+import { AuthorizationStatus } from '../../consts';
+import { useAppSelector } from '../../hooks/redux';
+import AuthNavList from './AuthNavList';
+import NoAuthNavList from './NoAuthNavList';
 
 function HeaderNavigation() {
-  const favoriteOffers = useAppSelector((state) => state.appReducer.favoriteOffers);
-  const dispatch = useAppDispatch();
+  const authorizationStatus = useAppSelector((state) => state.appReducer.authorizationStatus);
 
   return (
     <nav className="header__nav">
-      <ul className="header__nav-list">
-        <li className="header__nav-item user">
-          <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-            <div className="header__avatar-wrapper user__avatar-wrapper">
-            </div>
-            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-            <span className="header__favorite-count">{favoriteOffers.length}</span>
-          </Link>
-        </li>
-        <li className="header__nav-item">
-          <div className="header__nav-link">
-            <span
-              className="header__signout"
-              onClick={() => {
-                dispatch(logout());
-              }}
-            >
-              Sign out
-            </span>
-          </div>
-        </li>
-      </ul>
+      {
+        authorizationStatus === AuthorizationStatus.Auth
+          ? <AuthNavList />
+          : <NoAuthNavList />
+      }
     </nav>
   );
 }
