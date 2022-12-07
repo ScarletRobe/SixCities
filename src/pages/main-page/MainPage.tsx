@@ -4,6 +4,7 @@ import Locations from '../../components/locations/Locations';
 import EmptyOffersSection from '../../components/offersSection/EmptyOffersSection';
 import OffersSection from '../../components/offersSection/OffersSection';
 import OffersSectionLoading from '../../components/offersSection/OffersSectionLoading';
+import OffersSectionLoadingError from '../../components/offersSection/OffersSectionLoadingError';
 import { useAppSelector } from '../../hooks/redux';
 import { Offer } from '../../types/offer';
 
@@ -12,7 +13,7 @@ const getOffersSectionElement = (offersByCity: Offer[], isLoading: boolean, load
     return <OffersSectionLoading />;
   }
   if (loadingError) {
-    return `${loadingError}`;
+    return <OffersSectionLoadingError />;
   }
   if (!offersByCity.length) {
     return <EmptyOffersSection />;
