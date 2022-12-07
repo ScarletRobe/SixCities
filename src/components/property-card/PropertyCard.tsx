@@ -3,7 +3,7 @@ import { Offer } from '../../types/offer';
 import Rating from '../UI/Rating';
 import { capitalizeWord } from '../../utils';
 import PropertyInsideList from './PropertyInsideList';
-import HostProfile from '../hostProfile/HostProfile';
+import HostProfile from '../host-profile/HostProfile';
 import Reviews from '../reviews/Reviews';
 import PlaceCards from '../place-cards/PlaceCards';
 import { offers } from '../../mocks/offers';

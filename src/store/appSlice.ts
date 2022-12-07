@@ -1,4 +1,3 @@
-// import { Token } from './../services/token';
 import { checkAuth, fetchOffers, login, logout } from './apiActions';
 import { AuthorizationStatus } from './../consts';
 import { findFavoriteOffers, findOffersByCity } from './../utils';

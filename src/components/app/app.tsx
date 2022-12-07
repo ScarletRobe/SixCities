@@ -9,7 +9,7 @@ import NotFoundPage from '../../pages/not-found/NotFoundPage';
 import PropertyPage from '../../pages/property-page/PropertyPage';
 import { Comment } from '../../types/comment';
 import PrivateRoute from '../private-route/PrivateRoute';
-import ScrollToTop from '../scrollToTop/ScrollToTop';
+import ScrollToTop from '../scroll-to-top/ScrollToTop';
 
 type AppProps = {
   reviews: Comment[];

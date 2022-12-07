@@ -1,10 +1,10 @@
 /* eslint-disable no-nested-ternary */
 import Header from '../../components/header/Header';
 import Locations from '../../components/locations/Locations';
-import EmptyOffersSection from '../../components/offersSection/EmptyOffersSection';
-import OffersSection from '../../components/offersSection/OffersSection';
-import OffersSectionLoading from '../../components/offersSection/OffersSectionLoading';
-import OffersSectionLoadingError from '../../components/offersSection/OffersSectionLoadingError';
+import EmptyOffersSection from '../../components/offers-section/EmptyOffersSection';
+import OffersSection from '../../components/offers-section/OffersSection';
+import OffersSectionLoading from '../../components/offers-section/OffersSectionLoading';
+import OffersSectionLoadingError from '../../components/offers-section/OffersSectionLoadingError';
 import { useAppSelector } from '../../hooks/redux';
 import { Offer } from '../../types/offer';
 
