@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../consts';
+import { AppRoute } from '../../consts';
+import { useAppSelector } from '../../hooks/redux';
 import FavoritesPage from '../../pages/favorites/FavoritesPage';
 import LoginPage from '../../pages/login/LoginPage';
 import MainPage from '../../pages/main-page/MainPage';
@@ -16,6 +17,8 @@ type AppProps = {
 
 
 function App ({reviews}: AppProps): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.appReducer.authorizationStatus);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -31,7 +34,7 @@ function App ({reviews}: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
               <FavoritesPage />
             </PrivateRoute>
           }
@@ -39,12 +42,14 @@ function App ({reviews}: AppProps): JSX.Element {
 
         <Route path={AppRoute.Place}
           element={
-            <React.Fragment>
-              <ScrollToTop />
-              <PropertyPage
-                reviews={reviews}
-              />
-            </React.Fragment>
+            <PrivateRoute authorizationStatus={authorizationStatus}>
+              <React.Fragment>
+                <ScrollToTop />
+                <PropertyPage
+                  reviews={reviews}
+                />
+              </React.Fragment>
+            </PrivateRoute>
           }
         />
 
