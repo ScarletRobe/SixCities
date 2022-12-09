@@ -5,6 +5,9 @@ import App from './components/app/app';
 import { comments } from './mocks/comments';
 import { checkAuth, fetchOffers } from './store/apiActions';
 import { store } from './store/store';
+import { ToastContainer } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(checkAuth());
 store.dispatch(fetchOffers());
@@ -16,6 +19,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+      <ToastContainer
+        position="top-center"
+      />
       <App
         reviews={comments}
       />
