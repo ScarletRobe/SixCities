@@ -79,5 +79,6 @@
     "eslint-config-htmlacademy": "^8.0.0",
     "faker": "^5.5.3",
     "typescript": "^4.8.4"
-  }
+  },
+  "homepage": "https://scarletrobe.github.io/SixCities/"
 }
