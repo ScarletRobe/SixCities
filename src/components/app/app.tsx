@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { AppRoute } from '../../consts';
 import { useAppSelector } from '../../hooks/redux';
 import FavoritesPage from '../../pages/favorites/FavoritesPage';
@@ -20,7 +20,7 @@ function App ({reviews}: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.appReducer.authorizationStatus);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -55,7 +55,7 @@ function App ({reviews}: AppProps): JSX.Element {
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
