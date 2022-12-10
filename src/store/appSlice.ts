@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import { checkAuth, fetchOffers, login, logout } from './apiActions';
 import { AuthorizationStatus } from './../consts';
 import { findFavoriteOffers, findOffersByCity } from './../utils';
 import { Offer, City } from './../types/offer';
 import { defaultCity } from '../consts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { UserData } from '../types/localUser';
 
 type InitialState = {
   city: City;
@@ -11,6 +13,7 @@ type InitialState = {
   offersByCity: Offer[];
   favoriteOffers: Offer[];
   authorizationStatus: AuthorizationStatus;
+  userData: UserData | null;
   loadingError: string | null;
   isLoading: boolean;
 }
@@ -21,6 +24,7 @@ const initialState: InitialState = {
   offersByCity: [],
   favoriteOffers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
+  userData: null,
   loadingError: '',
   isLoading: false,
 };
@@ -62,14 +66,25 @@ export const appSlice = createSlice({
       state.loadingError = null;
       state.isLoading = true;
     },
-    [checkAuth.fulfilled.type]: (state: InitialState, action: PayloadAction<AuthorizationStatus>) => {
-      state.authorizationStatus = action.payload;
+    [checkAuth.fulfilled.type]: (state: InitialState, action: PayloadAction<UserData>) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.userData = action.payload;
     },
-    [login.fulfilled.type]: (state: InitialState, action: PayloadAction<AuthorizationStatus>) => {
-      state.authorizationStatus = action.payload;
+    [checkAuth.rejected.type]: (state: InitialState, action: PayloadAction<null>) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.userData = action.payload;
     },
-    [logout.fulfilled.type]: (state: InitialState, action: PayloadAction<AuthorizationStatus>) => {
-      state.authorizationStatus = action.payload;
+    [login.fulfilled.type]: (state: InitialState, action: PayloadAction<UserData>) => {
+      state.authorizationStatus = AuthorizationStatus.Auth;
+      state.userData = action.payload;
+    },
+    [login.rejected.type]: (state: InitialState, action: PayloadAction<null>) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.userData = action.payload;
+    },
+    [logout.fulfilled.type]: (state: InitialState) => {
+      state.authorizationStatus = AuthorizationStatus.NoAuth;
+      state.userData = null;
     },
   }
 });

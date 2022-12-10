@@ -1,4 +1,4 @@
-import { APIRoute, AuthorizationStatus } from './../consts';
+import { APIRoute } from './../consts';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Offer } from '../types/offer';
 import { api } from '../services/api';
@@ -18,27 +18,27 @@ export const fetchOffers = createAsyncThunk(
   }
 );
 
-export const checkAuth = createAsyncThunk(
+export const checkAuth = createAsyncThunk<UserData | null>(
   'user/checkAuth',
-  async() => {
+  async(_, thunkAPI) => {
     try {
-      await api.get(APIRoute.Login);
-      return AuthorizationStatus.Auth;
+      const {data} = await api.get<UserData>(APIRoute.Login);
+      return data;
     } catch (error) {
-      return AuthorizationStatus.NoAuth;
+      return thunkAPI.rejectWithValue(null);
     }
   }
 );
 
-export const login = createAsyncThunk<AuthorizationStatus, AuthData>(
+export const login = createAsyncThunk<UserData | null, AuthData>(
   'user/login',
-  async({login: email, password}) => {
+  async({login: email, password}, thunkAPI) => {
     try {
-      const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
-      saveToken(token);
-      return AuthorizationStatus.Auth;
+      const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      return data;
     } catch (error) {
-      return AuthorizationStatus.NoAuth;
+      return thunkAPI.rejectWithValue(null);
     }
   }
 );
@@ -48,6 +48,5 @@ export const logout = createAsyncThunk(
   async() => {
     await api.delete(APIRoute.Logout);
     dropToken();
-    return AuthorizationStatus.NoAuth;
   }
 );
