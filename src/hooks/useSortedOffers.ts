@@ -3,9 +3,8 @@ import { SortOptions } from '../consts';
 import { Offer } from '../types/offer';
 
 export const useSortedOffers = (activeSortOption: string, offers: Offer[]) => {
-  const offersCopy = [...offers];
-
   const sortedOffers: Offer[] = useMemo(() => {
+    const offersCopy = [...offers];
     switch (activeSortOption) {
       case SortOptions.Popular:
         return offersCopy;

@@ -72,7 +72,7 @@ function Map({ location, activeCardId, setActiveCardId, type }: MapProps): JSX.E
         map.removeLayer(markerGroup);
       }
     };
-  }, [map, offers, activeCardId]);
+  }, [map, offers, activeCardId, markerGroup, navigate, setActiveCardId]);
 
   return (
     <section

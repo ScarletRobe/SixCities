@@ -40,7 +40,7 @@ function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, location]);
+  }, [mapRef, location, map]);
 
   return map;
 }
