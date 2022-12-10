@@ -12,11 +12,11 @@ function LoginForm () {
     e.preventDefault();
     dispatch(login({login: email, password}));
     setIsSubmitted(true);
-    setEmail('');
-    setPassword('');
 
     setTimeout(() => {
       setIsSubmitted(false);
+      setEmail('');
+      setPassword('');
     }, 5000);
   };
 
@@ -39,6 +39,7 @@ function LoginForm () {
             required
             onChange={(e) => setEmail(e.target.value)}
             value={email}
+            disabled={isSubmitted}
           />
         </div>
         <div className="login__input-wrapper form__input-wrapper">
@@ -51,6 +52,7 @@ function LoginForm () {
             required
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            disabled={isSubmitted}
           />
         </div>
         <button
