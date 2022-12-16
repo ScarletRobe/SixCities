@@ -3,12 +3,12 @@ import Header from '../../components/header/Header';
 import LoginForm from '../../components/login-form/LoginForm';
 import { AuthorizationStatus, LOCATIONS } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { city } from '../../store/appSlice';
+import { city } from '../../store/app-slice/appSlice';
 import { findCityByName, getRandomPositiveInteger } from '../../utils';
 
 function Login (): JSX.Element {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.appReducer.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.rootReducer.userData.authorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Auth) {
     return <Navigate to='/' />;
