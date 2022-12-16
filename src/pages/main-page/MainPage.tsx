@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import Header from '../../components/header/Header';
 import Locations from '../../components/locations/Locations';
 import EmptyOffersSection from '../../components/offers-section/EmptyOffersSection';
@@ -23,7 +22,7 @@ const getOffersSectionElement = (offersByCity: Offer[], isLoading: boolean, load
 };
 
 function MainPage(): JSX.Element {
-  const {offersByCity, isLoading, loadingError} = useAppSelector((state) => state.appReducer);
+  const {offersByCity, isLoading, loadingError} = useAppSelector((state) => state.rootReducer.appData);
 
   return (
     <div className="page page--gray page--main">

@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../hooks/redux';
 
 function EmptyOffersSection () {
-  const city = useAppSelector((state) => state.appReducer.city);
+  const city = useAppSelector((state) => state.rootReducer.appData.city);
 
   return (
     <div className="cities">

@@ -4,8 +4,8 @@ import { logout } from '../../store/apiActions';
 
 function AuthNavList () {
   const dispatch = useAppDispatch();
-  const favoriteOffers = useAppSelector((state) => state.appReducer.favoriteOffers);
-  const userData = useAppSelector((state) => state.appReducer.userData);
+  const favoriteOffers = useAppSelector((state) => state.rootReducer.appData.favoriteOffers);
+  const userData = useAppSelector((state) => state.rootReducer.userData.userData);
 
   if (!userData) {
     throw new Error('userData is empty');

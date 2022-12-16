@@ -1,9 +1,8 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { CardTypes } from '../../consts';
 import { useAppDispatch } from '../../hooks/redux';
 import { FavoritesOffers } from '../../pages/favorites/FavoritesPage';
-import { city } from '../../store/appSlice';
+import { city } from '../../store/app-slice/appSlice';
 import { findCityByName } from '../../utils';
 import PlaceCards from '../place-cards/PlaceCards';
 

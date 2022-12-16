@@ -36,7 +36,7 @@ function Map({ location, activeCardId, setActiveCardId, type }: MapProps): JSX.E
   const navigate = useNavigate();
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
-  const offers = useAppSelector((state) => state.appReducer.offersByCity);
+  const offers = useAppSelector((state) => state.rootReducer.appData.offersByCity);
   const markerGroup = leaflet.layerGroup();
 
   useEffect(() => {

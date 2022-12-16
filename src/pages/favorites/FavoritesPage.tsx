@@ -22,7 +22,7 @@ const getFavoritesPlacesFromOffers = (favoriteOffers: Offer[]) => {
 };
 
 function FavoritesPage(): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => state.appReducer.favoriteOffers);
+  const favoriteOffers = useAppSelector((state) => state.rootReducer.appData.favoriteOffers);
 
   return (
     <div className="page">

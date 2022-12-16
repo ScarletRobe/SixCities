@@ -4,7 +4,7 @@ import AuthNavList from './AuthNavList';
 import NoAuthNavList from './NoAuthNavList';
 
 function HeaderNavigation() {
-  const authorizationStatus = useAppSelector((state) => state.appReducer.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.rootReducer.userData.authorizationStatus);
 
   return (
     <nav className="header__nav">

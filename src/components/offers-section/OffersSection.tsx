@@ -8,8 +8,8 @@ import PlaceCards from '../place-cards/PlaceCards';
 import Sort from '../sort/Sort';
 
 function OffersSection() {
-  const city = useAppSelector((state) => state.appReducer.city);
-  const offers = useAppSelector((state) => state.appReducer.offersByCity);
+  const city = useAppSelector((state) => state.rootReducer.appData.city);
+  const offers = useAppSelector((state) => state.rootReducer.appData.offersByCity);
 
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const [activeSortOption, setActiveSortOption] = useState<string>(SortOptions.Popular);

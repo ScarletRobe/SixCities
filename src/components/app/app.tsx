@@ -17,7 +17,7 @@ type AppProps = {
 
 
 function App ({reviews}: AppProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.appReducer.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state.rootReducer.userData.authorizationStatus);
 
   return (
     <HashRouter>
@@ -52,6 +52,8 @@ function App ({reviews}: AppProps): JSX.Element {
             </PrivateRoute>
           }
         />
+
+        <Route path={AppRoute.NotFound} element={<NotFoundPage />} />
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

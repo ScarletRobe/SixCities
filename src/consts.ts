@@ -5,6 +5,7 @@ export enum AppRoute {
   Logout = '/logout',
   Place = '/place/:id',
   Offers = '/hotels',
+  NotFound = '/not-found'
 }
 
 export enum AuthorizationStatus {

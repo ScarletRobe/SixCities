@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { LOCATIONS } from '../../consts';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
-import { city } from '../../store/appSlice';
+import { city } from '../../store/app-slice/appSlice';
 import { City } from '../../types/offer';
 
 function Locations(): JSX.Element {
-  const currentLocation = useAppSelector((state) => state.appReducer.city);
+  const currentLocation = useAppSelector((state) => state.rootReducer.appData.city);
   const dispatch = useAppDispatch();
 
   const clickHandler = (location: City) => {
