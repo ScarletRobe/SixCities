@@ -5,6 +5,7 @@ import { api } from '../services/api';
 import { UserData } from '../types/localUser';
 import { AuthData } from '../types/authData';
 import { dropToken, saveToken } from '../services/token';
+import { Comment } from '../types/comment';
 
 export const fetchOffers = createAsyncThunk(
   'data/fetchOffers',
@@ -28,6 +29,30 @@ export const fetchOffer = createAsyncThunk<Offer, string>(
       return thunkAPI.rejectWithValue(null);
     }
   }
+);
+
+export const fetchNearOffers = createAsyncThunk<Offer[], string>(
+  'data/fetchNearOffers',
+  async (id, thunkAPI) => {
+    try {
+      const {data} = await api.get<Offer[]>(`${APIRoute.Offers}/${id}/nearby`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(null);
+    }
+  },
+);
+
+export const fetchReviews = createAsyncThunk<Comment[], string>(
+  'data/fetchComments',
+  async (id, thunkAPI) => {
+    try {
+      const {data} = await api.get<Comment[]>(`${APIRoute.Reviews}/${id}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(null);
+    }
+  },
 );
 
 export const checkAuth = createAsyncThunk<UserData | null>(
