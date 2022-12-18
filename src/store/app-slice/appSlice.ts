@@ -1,3 +1,4 @@
+import { fetchOffer } from './../apiActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
@@ -7,19 +8,25 @@ import { fetchOffers } from '../apiActions';
 type InitialState = {
   city: City;
   allOffers: Offer[];
+  allOffersLoadingError: string | null;
+  isAllOffersLoading: boolean;
   offersByCity: Offer[];
   favoriteOffers: Offer[];
-  loadingError: string | null;
-  isLoading: boolean;
+  currentOffer: Offer | null;
+  currentOfferLoadingError: boolean | null;
+  isCurrentOfferLoading: boolean;
 };
 
 const initialState: InitialState = {
   city: defaultCity,
   allOffers: [],
+  allOffersLoadingError: null,
+  isAllOffersLoading: false,
   offersByCity: [],
   favoriteOffers: [],
-  loadingError: '',
-  isLoading: false,
+  currentOffer: null,
+  currentOfferLoadingError: null,
+  isCurrentOfferLoading: false,
 };
 
 export const appSlice = createSlice({
@@ -30,9 +37,6 @@ export const appSlice = createSlice({
       state.city = action.payload;
       state.offersByCity = findOffersByCity(action.payload.name, state.allOffers);
     },
-    allOffers: (state, action: PayloadAction<Offer[]>) => {
-      state.allOffers = action.payload;
-    },
     offersByCity: (state, action: PayloadAction<Offer[]>) => {
       state.offersByCity = action.payload;
     },
@@ -42,23 +46,34 @@ export const appSlice = createSlice({
   },
   extraReducers: {
     [fetchOffers.pending.type]: (state: InitialState) => {
-      state.loadingError = null;
-      state.isLoading = true;
+      state.allOffersLoadingError = null;
+      state.isAllOffersLoading = true;
     },
     [fetchOffers.fulfilled.type]: (state: InitialState, action: PayloadAction<Offer[]>) => {
       state.allOffers = action.payload;
       state.offersByCity = findOffersByCity(state.city.name, action.payload);
       state.favoriteOffers = findFavoriteOffers(action.payload);
-      state.loadingError = null;
-      state.isLoading = false;
+      state.isAllOffersLoading = false;
     },
     [fetchOffers.rejected.type]: (state: InitialState, action: PayloadAction<string>) => {
-      state.loadingError = action.payload;
-      state.isLoading = false;
+      state.allOffersLoadingError = action.payload;
+      state.isAllOffersLoading = false;
+    },
+    [fetchOffer.pending.type]: (state: InitialState) => {
+      state.isCurrentOfferLoading = true;
+      state.currentOfferLoadingError = null;
+    },
+    [fetchOffer.fulfilled.type]: (state: InitialState, action: PayloadAction<Offer>) => {
+      state.isCurrentOfferLoading = false;
+      state.currentOffer = action.payload;
+    },
+    [fetchOffer.rejected.type]: (state: InitialState) => {
+      state.isCurrentOfferLoading = false;
+      state.currentOfferLoadingError = true;
     },
   }
 });
 
-export const {city, allOffers, offersByCity, favoriteOffers} = appSlice.actions;
+export const {city, offersByCity, favoriteOffers} = appSlice.actions;
 
 export default appSlice.reducer;
