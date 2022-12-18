@@ -1,8 +1,9 @@
 import React from 'react';
 import { HashRouter, Route, Routes } from 'react-router-dom';
-import { AppRoute } from '../../consts';
+import { AppRoute, AuthorizationStatus } from '../../consts';
 import { useAppSelector } from '../../hooks/redux';
 import FavoritesPage from '../../pages/favorites/FavoritesPage';
+import LoadingPage from '../../pages/loading-page/LoadingPage';
 import LoginPage from '../../pages/login/LoginPage';
 import MainPage from '../../pages/main-page/MainPage';
 import NotFoundPage from '../../pages/not-found/NotFoundPage';
@@ -18,6 +19,8 @@ type AppProps = {
 
 function App ({reviews}: AppProps): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.rootReducer.userData.authorizationStatus);
+
+  if (authorizationStatus === AuthorizationStatus.Unknown) {return <LoadingPage />;}
 
   return (
     <HashRouter>
