@@ -4,7 +4,7 @@ import Header from '../../components/header/Header';
 import PropertyCard from '../../components/property-card/PropertyCard';
 import { AppRoute } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { fetchOffer } from '../../store/apiActions';
+import { fetchNearOffers, fetchOffer, fetchReviews } from '../../store/apiActions';
 import { Comment } from '../../types/comment';
 import LoadingPage from '../loading-page/LoadingPage';
 
@@ -25,6 +25,8 @@ function Property ({reviews}: PropertyPageProps): JSX.Element {
       return;
     }
     dispatch(fetchOffer(id));
+    dispatch(fetchNearOffers(id));
+    dispatch(fetchReviews(id));
   }, [id, dispatch]);
 
   const {currentOffer, currentOfferLoadingError, isCurrentOfferLoading} = useAppSelector((state) => state.rootReducer.appData);
@@ -37,7 +39,7 @@ function Property ({reviews}: PropertyPageProps): JSX.Element {
       ? (
         <div className="page">
           <Header withNav isMainPage={false}/>
-          <PropertyCard offer={currentOffer} reviews={reviews}/>
+          <PropertyCard offer={currentOffer}/>
         </div>
       )
       : (

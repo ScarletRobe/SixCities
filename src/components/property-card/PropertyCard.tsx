@@ -6,19 +6,20 @@ import PropertyInsideList from './PropertyInsideList';
 import HostProfile from '../host-profile/HostProfile';
 import Reviews from '../reviews/Reviews';
 import PlaceCards from '../place-cards/PlaceCards';
-import { offers } from '../../mocks/offers';
 import { CardTypes } from '../../consts';
 import Map from '../map/Map';
 import { useState } from 'react';
-import { Comment } from '../../types/comment';
+import { useAppSelector } from '../../hooks/redux';
+import Spinner from '../UI/spinner/Spinner';
 
 type PropertyCardProps = {
   offer: Offer;
-  reviews: Comment[];
 }
 
-function PropertyCard({offer, reviews}: PropertyCardProps): JSX.Element {
+function PropertyCard({offer}: PropertyCardProps): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<number | null>(offer.id);
+  const {reviews, isReviewsLoading} = useAppSelector((state) => state.rootReducer.appData);
+  const {nearOffers, isNearOffersLoading} = useAppSelector((state) => state.rootReducer.appData);
 
   const cardHoverHandler = (offerId: number | null) => {
     if (!offerId) {setActiveCardId(offer.id);}
@@ -74,11 +75,16 @@ function PropertyCard({offer, reviews}: PropertyCardProps): JSX.Element {
               <PropertyInsideList goods={offer.goods}/>
             </div>
             <HostProfile host={offer.host} description={offer.description} />
-            <Reviews reviews={reviews}/>
+            {
+              isReviewsLoading
+                ? <Spinner />
+                : <Reviews reviews={reviews}/>
+            }
           </div>
         </div>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <Map
+            offers={nearOffers}
             location={offer.location}
             activeCardId={activeCardId}
             setActiveCardId={setActiveCardId}
@@ -89,7 +95,11 @@ function PropertyCard({offer, reviews}: PropertyCardProps): JSX.Element {
       <div className="container">
         <section className="near-places places">
           <h2 className="near-places__title">Other places in the neighbourhood</h2>
-          <PlaceCards offers={offers.slice(0,3)} cardType={CardTypes.Property} cardHoverHandler={cardHoverHandler}/>
+          {
+            isNearOffersLoading
+              ? <Spinner />
+              : <PlaceCards offers={nearOffers} cardType={CardTypes.Property} cardHoverHandler={cardHoverHandler}/>
+          }
         </section>
       </div>
     </main>
