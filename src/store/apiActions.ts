@@ -6,6 +6,7 @@ import { UserData } from '../types/localUser';
 import { AuthData } from '../types/authData';
 import { dropToken, saveToken } from '../services/token';
 import { Comment } from '../types/comment';
+import { NewReviewData } from '../types/newReviewData';
 
 export const fetchOffers = createAsyncThunk(
   'data/fetchOffers',
@@ -48,6 +49,18 @@ export const fetchReviews = createAsyncThunk<Comment[], string>(
   async (id, thunkAPI) => {
     try {
       const {data} = await api.get<Comment[]>(`${APIRoute.Reviews}/${id}`);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(null);
+    }
+  },
+);
+
+export const sendReview = createAsyncThunk<Comment[], NewReviewData>(
+  'data/sendReview',
+  async ({id, reviewText, reviewRating }, thunkAPI) => {
+    try {
+      const {data} = await api.post<Comment[]>(`${APIRoute.Reviews}/${id}`, {comment: reviewText, rating: reviewRating});
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(null);

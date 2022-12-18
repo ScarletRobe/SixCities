@@ -1,4 +1,4 @@
-import { fetchNearOffers, fetchOffer, fetchReviews } from './../apiActions';
+import { fetchNearOffers, fetchOffer, fetchReviews, sendReview } from './../apiActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
@@ -101,6 +101,9 @@ export const appSlice = createSlice({
     [fetchReviews.rejected.type]: (state: InitialState) => {
       state.isReviewsLoading = false;
       state.reviews = [];
+    },
+    [sendReview.fulfilled.type]: (state: InitialState, action: PayloadAction<Comment[]>) => {
+      state.reviews = action.payload;
     },
   }
 });
