@@ -8,16 +8,10 @@ import LoginPage from '../../pages/login/LoginPage';
 import MainPage from '../../pages/main-page/MainPage';
 import NotFoundPage from '../../pages/not-found/NotFoundPage';
 import PropertyPage from '../../pages/property-page/PropertyPage';
-import { Comment } from '../../types/comment';
 import PrivateRoute from '../private-route/PrivateRoute';
 import ScrollToTop from '../scroll-to-top/ScrollToTop';
 
-type AppProps = {
-  reviews: Comment[];
-}
-
-
-function App ({reviews}: AppProps): JSX.Element {
+function App (): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.rootReducer.userData.authorizationStatus);
 
   if (authorizationStatus === AuthorizationStatus.Unknown) {return <LoadingPage />;}
@@ -48,9 +42,7 @@ function App ({reviews}: AppProps): JSX.Element {
             <PrivateRoute authorizationStatus={authorizationStatus}>
               <React.Fragment>
                 <ScrollToTop />
-                <PropertyPage
-                  reviews={reviews}
-                />
+                <PropertyPage />
               </React.Fragment>
             </PrivateRoute>
           }

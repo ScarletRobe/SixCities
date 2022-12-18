@@ -5,18 +5,13 @@ import PropertyCard from '../../components/property-card/PropertyCard';
 import { AppRoute } from '../../consts';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { fetchNearOffers, fetchOffer, fetchReviews } from '../../store/apiActions';
-import { Comment } from '../../types/comment';
 import LoadingPage from '../loading-page/LoadingPage';
 
 type PropertyPageParams = {
   id: string;
 }
 
-type PropertyPageProps = {
-  reviews: Comment[];
-}
-
-function Property ({reviews}: PropertyPageProps): JSX.Element {
+function Property (): JSX.Element {
   const {id} = useParams<PropertyPageParams>();
   const dispatch = useAppDispatch();
 

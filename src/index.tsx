@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { comments } from './mocks/comments';
 import { checkAuth, fetchOffers } from './store/apiActions';
 import { store } from './store/store';
 import { ToastContainer } from 'react-toastify';
@@ -22,9 +21,7 @@ root.render(
       <ToastContainer
         position="top-center"
       />
-      <App
-        reviews={comments}
-      />
+      <App />
     </Provider>
   </React.StrictMode>,
 );
