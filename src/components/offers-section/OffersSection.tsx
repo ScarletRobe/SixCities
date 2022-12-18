@@ -50,6 +50,7 @@ function OffersSection() {
         </section>
         <div className="cities__right-section">
           <Map
+            offers={offers}
             location={location}
             activeCardId={activeCardId}
             type='cities'

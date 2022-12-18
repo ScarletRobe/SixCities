@@ -5,15 +5,15 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 import { CardTypes, Markers } from '../../consts';
-import { Location } from '../../types/offer';
+import { Location, Offer } from '../../types/offer';
 import useMap from '../../hooks/useMap';
 import { useNavigate } from 'react-router-dom';
 import L from 'leaflet';
 import PlaceCard from '../place-card/PlaceCard';
-import { useAppSelector } from '../../hooks/redux';
 import React from 'react';
 
 type MapProps = {
+  offers: Offer[];
   location: Location;
   activeCardId: number | null;
   setActiveCardId?: (id: number) => void;
@@ -32,11 +32,10 @@ const currentCustomMarker = leaflet.icon({
   iconAnchor: [20, 40],
 });
 
-function Map({ location, activeCardId, setActiveCardId, type }: MapProps): JSX.Element {
+function Map({ offers, location, activeCardId, setActiveCardId, type }: MapProps): JSX.Element {
   const navigate = useNavigate();
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
-  const offers = useAppSelector((state) => state.rootReducer.appData.offersByCity);
   const markerGroup = leaflet.layerGroup();
 
   useEffect(() => {
