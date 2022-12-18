@@ -1,9 +1,10 @@
-import { fetchOffer } from './../apiActions';
+import { fetchNearOffers, fetchOffer, fetchReviews } from './../apiActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
 import { findOffersByCity, findFavoriteOffers } from '../../utils';
 import { fetchOffers } from '../apiActions';
+import { Comment } from '../../types/comment';
 
 type InitialState = {
   city: City;
@@ -15,6 +16,10 @@ type InitialState = {
   currentOffer: Offer | null;
   currentOfferLoadingError: boolean | null;
   isCurrentOfferLoading: boolean;
+  nearOffers: Offer[];
+  isNearOffersLoading: boolean;
+  reviews: Comment[];
+  isReviewsLoading: boolean;
 };
 
 const initialState: InitialState = {
@@ -27,6 +32,10 @@ const initialState: InitialState = {
   currentOffer: null,
   currentOfferLoadingError: null,
   isCurrentOfferLoading: false,
+  nearOffers: [],
+  isNearOffersLoading: false,
+  reviews: [],
+  isReviewsLoading: false,
 };
 
 export const appSlice = createSlice({
@@ -70,6 +79,28 @@ export const appSlice = createSlice({
     [fetchOffer.rejected.type]: (state: InitialState) => {
       state.isCurrentOfferLoading = false;
       state.currentOfferLoadingError = true;
+    },
+    [fetchNearOffers.pending.type]: (state: InitialState) => {
+      state.isNearOffersLoading = true;
+    },
+    [fetchNearOffers.fulfilled.type]: (state: InitialState, action: PayloadAction<Offer[]>) => {
+      state.isNearOffersLoading = false;
+      state.nearOffers = action.payload;
+    },
+    [fetchNearOffers.rejected.type]: (state: InitialState) => {
+      state.isNearOffersLoading = false;
+      state.nearOffers = [];
+    },
+    [fetchReviews.pending.type]: (state: InitialState) => {
+      state.isReviewsLoading = true;
+    },
+    [fetchReviews.fulfilled.type]: (state: InitialState, action: PayloadAction<Comment[]>) => {
+      state.isReviewsLoading = false;
+      state.reviews = action.payload;
+    },
+    [fetchReviews.rejected.type]: (state: InitialState) => {
+      state.isReviewsLoading = false;
+      state.reviews = [];
     },
   }
 });
