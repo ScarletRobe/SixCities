@@ -78,7 +78,7 @@ function PropertyCard({offer}: PropertyCardProps): JSX.Element {
             {
               isReviewsLoading
                 ? <Spinner />
-                : <Reviews reviews={reviews}/>
+                : <Reviews reviews={reviews} offerId={offer.id}/>
             }
           </div>
         </div>

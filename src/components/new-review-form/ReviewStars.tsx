@@ -2,9 +2,10 @@ import React, { ChangeEvent } from 'react';
 
 type ReviewStarsProps = {
   changeHandler: (evt:ChangeEvent<HTMLInputElement>) => void;
+  pickedStar: number;
 }
 
-function ReviewStars ({changeHandler}: ReviewStarsProps): JSX.Element {
+function ReviewStars ({changeHandler, pickedStar}: ReviewStarsProps): JSX.Element {
   const STARS_AMOUNT = 5;
 
   enum Titles {
@@ -26,6 +27,7 @@ function ReviewStars ({changeHandler}: ReviewStarsProps): JSX.Element {
           id={`${i}-stars`}
           type="radio"
           onChange={changeHandler}
+          checked={i === pickedStar}
         />
         <label htmlFor={`${i}-stars`} className="reviews__rating-label form__rating-label" title={Titles[i]}>
           <svg className="form__star-image" width="37" height="33">
