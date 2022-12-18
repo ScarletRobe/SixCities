@@ -18,6 +18,18 @@ export const fetchOffers = createAsyncThunk(
   }
 );
 
+export const fetchOffer = createAsyncThunk<Offer, string>(
+  'data/fetchOffer',
+  async (id, thunkAPI) => {
+    try {
+      const response = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(null);
+    }
+  }
+);
+
 export const checkAuth = createAsyncThunk<UserData | null>(
   'user/checkAuth',
   async(_, thunkAPI) => {
