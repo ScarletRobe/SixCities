@@ -22,7 +22,7 @@ const getOffersSectionElement = (offersByCity: Offer[], isLoading: boolean, load
 };
 
 function MainPage(): JSX.Element {
-  const {offersByCity, isLoading, loadingError} = useAppSelector((state) => state.rootReducer.appData);
+  const {offersByCity, isAllOffersLoading, allOffersLoadingError} = useAppSelector((state) => state.rootReducer.appData);
 
   return (
     <div className="page page--gray page--main">
@@ -38,7 +38,7 @@ function MainPage(): JSX.Element {
         <div className="tabs">
           <Locations />
         </div>
-        {getOffersSectionElement(offersByCity, isLoading, loadingError)}
+        {getOffersSectionElement(offersByCity, isAllOffersLoading, allOffersLoadingError)}
       </main>
     </div>
   );

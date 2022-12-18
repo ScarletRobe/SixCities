@@ -2,7 +2,7 @@ import { useAppSelector } from '../../hooks/redux';
 import classes from './offersSection.module.css';
 
 function OffersSectionLoadingError () {
-  const errorMessage = useAppSelector((state) => state.rootReducer.appData.loadingError);
+  const errorMessage = useAppSelector((state) => state.rootReducer.appData.allOffersLoadingError);
 
   return (
     <div className="cities">
