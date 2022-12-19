@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 import { useState } from 'react';
-import { useAppDispatch } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { sendReview } from '../../store/apiActions';
 import ReviewStars from './ReviewStars';
 
@@ -19,6 +19,7 @@ const validateForm = ({rating, review}: ReviewDataState) => ((rating !== '0') &&
 
 function NewReviewForm ({offerId}: NewReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const {isReviewSending} = useAppSelector((state) => state.rootReducer.appData);
   const [reviewData, setReviewData] = useState<ReviewDataState>({
     rating: '0',
     review: '',
@@ -65,7 +66,7 @@ function NewReviewForm ({offerId}: NewReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!validateForm(reviewData)}
+          disabled={!validateForm(reviewData) || isReviewSending}
         >
           Submit
         </button>
