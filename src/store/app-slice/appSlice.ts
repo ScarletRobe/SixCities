@@ -20,6 +20,7 @@ type InitialState = {
   isNearOffersLoading: boolean;
   reviews: Comment[];
   isReviewsLoading: boolean;
+  isReviewSending: boolean;
 };
 
 const initialState: InitialState = {
@@ -36,6 +37,7 @@ const initialState: InitialState = {
   isNearOffersLoading: false,
   reviews: [],
   isReviewsLoading: false,
+  isReviewSending: false,
 };
 
 export const appSlice = createSlice({
@@ -100,10 +102,16 @@ export const appSlice = createSlice({
     },
     [fetchReviews.rejected.type]: (state: InitialState) => {
       state.isReviewsLoading = false;
-      state.reviews = [];
+    },
+    [sendReview.pending.type]: (state: InitialState) => {
+      state.isReviewSending = true;
     },
     [sendReview.fulfilled.type]: (state: InitialState, action: PayloadAction<Comment[]>) => {
+      state.isReviewSending = false;
       state.reviews = action.payload;
+    },
+    [sendReview.rejected.type]: (state: InitialState) => {
+      state.isReviewSending = false;
     },
   }
 });
