@@ -84,7 +84,7 @@ function PropertyCard({offer}: PropertyCardProps): JSX.Element {
         </div>
         <div style={{display: 'flex', justifyContent: 'center'}}>
           <Map
-            offers={nearOffers}
+            offers={[...nearOffers, offer]}
             location={offer.location}
             activeCardId={activeCardId}
             setActiveCardId={setActiveCardId}
