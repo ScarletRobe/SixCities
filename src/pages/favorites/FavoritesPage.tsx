@@ -4,6 +4,8 @@ import { Offer } from '../../types/offer';
 import { useAppSelector } from '../../hooks/redux';
 import FavoritesCard from '../../components/favorites-card/FavoritesCard';
 import EmptyFavoritesCard from '../../components/favorites-card/EmptyFavoritesCard';
+import LoadingPage from '../loading-page/LoadingPage';
+import FavoritesLoadingErrorCard from '../../components/favorites-card/FavoritesLoadingErrorCard';
 
 export type FavoritesOffers = {
   [key: string]: Offer[];
@@ -22,7 +24,15 @@ const getFavoritesPlacesFromOffers = (favoriteOffers: Offer[]) => {
 };
 
 function FavoritesPage(): JSX.Element {
-  const favoriteOffers = useAppSelector((state) => state.rootReducer.appData.favoriteOffers);
+  const {favoriteOffers, favoriteOffersLoadingError, isFavoriteOffersLoading} = useAppSelector((state) => state.rootReducer.appData);
+
+  if (isFavoriteOffersLoading) {
+    return <LoadingPage />;
+  }
+
+  if (favoriteOffersLoadingError) {
+    return <FavoritesLoadingErrorCard />;
+  }
 
   return (
     <div className="page">
