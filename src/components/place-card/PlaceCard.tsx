@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { CardTypes } from '../../consts';
 import { Offer } from '../../types/offer';
 import { capitalizeWord } from '../../utils';
+import AddToFavoritesBtn from '../UI/add-to-favorites/AddToFavoritesBtn';
 import Rating from '../UI/Rating';
 
 type PlaceCardProps = {
@@ -73,12 +74,7 @@ cardHoverHandler}: PlaceCardProps): JSX.Element {
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           {cardType !== CardTypes.MarkerPopup &&
-            <button className={`${isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active' : 'place-card__bookmark-button'} button`} type="button">
-              <svg className="place-card__bookmark-icon" width="18" height="19">
-                <use xlinkHref="#icon-bookmark"></use>
-              </svg>
-              <span className="visually-hidden">{isFavorite ? 'Add to bookmarks' : 'Remove from bookmarks'}</span>
-            </button>}
+            <AddToFavoritesBtn id={id} btnType={CardTypes.Main} isFavorite={isFavorite} />}
         </div>
         <div className="place-card__rating rating">
           <Rating rating={rating} type='place-card' />
