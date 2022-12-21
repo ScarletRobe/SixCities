@@ -1,4 +1,4 @@
-import { fetchNearOffers, fetchOffer, fetchReviews, sendReview } from './../apiActions';
+import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStatus } from './../apiActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
@@ -112,6 +112,19 @@ export const appSlice = createSlice({
     },
     [sendReview.rejected.type]: (state: InitialState) => {
       state.isReviewSending = false;
+    },
+    [setFavoritesStatus.fulfilled.type]: (state: InitialState, {payload: {offer, withChangeCurrentOffer}}: PayloadAction<{offer: Offer; withChangeCurrentOffer: boolean}>) => {
+      if (withChangeCurrentOffer) {
+        state.currentOffer = offer;
+      }
+      state.allOffers[state.allOffers.findIndex((off) => off.id === offer.id)] = offer;
+      state.nearOffers[state.nearOffers.findIndex((off) => off.id === offer.id)] = offer;
+
+      if (offer.isFavorite) {
+        state.favoriteOffers.push(offer);
+      } else {
+        state.favoriteOffers = state.favoriteOffers.filter((off) => off.id !== offer.id);
+      }
     },
   }
 });

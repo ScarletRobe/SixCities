@@ -36,7 +36,7 @@ function AddToFavoritesBtn ({id, isFavorite, btnType}: AddToFavoritesBtnProps) {
   const favoritesBtnClickHandler = (evt: React.MouseEvent) => {
     evt.stopPropagation();
     evt.preventDefault();
-    dispatch(setFavoritesStatus({id, isFavorite, withChangeCurrent: btnType === CardTypes.Property}));
+    dispatch(setFavoritesStatus({id, isFavorite, withChangeCurrentOffer: btnType === CardTypes.Property}));
   };
 
   return (

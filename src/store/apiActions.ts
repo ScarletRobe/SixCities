@@ -8,6 +8,7 @@ import { dropToken, saveToken } from '../services/token';
 import { Comment } from '../types/comment';
 import { NewReviewData } from '../types/newReviewData';
 import { toast } from 'react-toastify';
+import { OfferData } from '../types/offerData';
 
 export const fetchOffers = createAsyncThunk(
   'data/fetchOffers',
@@ -42,6 +43,15 @@ export const fetchNearOffers = createAsyncThunk<Offer[], string>(
     } catch (error) {
       return thunkAPI.rejectWithValue(null);
     }
+  },
+);
+
+export const setFavoritesStatus = createAsyncThunk<{offer: Offer; withChangeCurrentOffer: boolean}, OfferData>(
+  'data/setFavoritesStatus',
+  async ({id, isFavorite, withChangeCurrentOffer}) => {
+    const status = isFavorite ? 0 : 1;
+    const response = await api.post<Offer>(`${APIRoute.Favorite}/${id}/${status}`);
+    return {offer: response.data, withChangeCurrentOffer};
   },
 );
 
