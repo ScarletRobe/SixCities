@@ -2,14 +2,18 @@ import { useMemo, useState } from 'react';
 import { CardTypes, SortOptions } from '../../consts';
 import { useAppSelector } from '../../hooks/redux';
 import { useSortedOffers } from '../../hooks/useSortedOffers';
+import { Offer } from '../../types/offer';
 import { debounce } from '../../utils';
 import Map from '../map/Map';
 import PlaceCards from '../place-cards/PlaceCards';
 import Sort from '../sort/Sort';
 
-function OffersSection() {
+type OffersSectionProps = {
+  offers: Offer[];
+}
+
+function OffersSection({offers}: OffersSectionProps) {
   const city = useAppSelector((state) => state.rootReducer.appData.city);
-  const offers = useAppSelector((state) => state.rootReducer.appData.offersByCity);
 
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const [activeSortOption, setActiveSortOption] = useState<string>(SortOptions.Popular);

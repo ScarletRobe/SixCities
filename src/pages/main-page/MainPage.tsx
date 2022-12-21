@@ -6,6 +6,7 @@ import OffersSectionLoading from '../../components/offers-section/OffersSectionL
 import OffersSectionLoadingError from '../../components/offers-section/OffersSectionLoadingError';
 import { useAppSelector } from '../../hooks/redux';
 import { Offer } from '../../types/offer';
+import { findOffersByCity } from '../../utils';
 
 const getOffersSectionElement = (offersByCity: Offer[], isLoading: boolean, loadingError: string | null) => {
   if (isLoading) {
@@ -17,12 +18,13 @@ const getOffersSectionElement = (offersByCity: Offer[], isLoading: boolean, load
   if (!offersByCity.length) {
     return <EmptyOffersSection />;
   } else {
-    return <OffersSection />;
+    return <OffersSection offers={offersByCity}/>;
   }
 };
 
 function MainPage(): JSX.Element {
-  const {offersByCity, isAllOffersLoading, allOffersLoadingError} = useAppSelector((state) => state.rootReducer.appData);
+  const {allOffers, city, isAllOffersLoading, allOffersLoadingError} = useAppSelector((state) => state.rootReducer.appData);
+  const offersByCity = findOffersByCity(city.name, allOffers);
 
   return (
     <div className="page page--gray page--main">
