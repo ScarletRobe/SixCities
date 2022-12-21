@@ -1,4 +1,4 @@
-import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStatus } from './../apiActions';
+import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStatus, fetchFavorites } from './../apiActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
@@ -13,6 +13,8 @@ type InitialState = {
   isAllOffersLoading: boolean;
   offersByCity: Offer[];
   favoriteOffers: Offer[];
+  favoriteOffersLoadingError: boolean | null;
+  isFavoriteOffersLoading: boolean;
   currentOffer: Offer | null;
   currentOfferLoadingError: boolean | null;
   isCurrentOfferLoading: boolean;
@@ -30,6 +32,8 @@ const initialState: InitialState = {
   isAllOffersLoading: false,
   offersByCity: [],
   favoriteOffers: [],
+  favoriteOffersLoadingError: null,
+  isFavoriteOffersLoading: false,
   currentOffer: null,
   currentOfferLoadingError: null,
   isCurrentOfferLoading: false,
@@ -69,6 +73,18 @@ export const appSlice = createSlice({
     [fetchOffers.rejected.type]: (state: InitialState, action: PayloadAction<string>) => {
       state.allOffersLoadingError = action.payload;
       state.isAllOffersLoading = false;
+    },
+    [fetchFavorites.pending.type]: (state: InitialState) => {
+      state.isFavoriteOffersLoading = true;
+      state.favoriteOffersLoadingError = null;
+    },
+    [fetchFavorites.fulfilled.type]: (state: InitialState, action: PayloadAction<Offer[]>) => {
+      state.isFavoriteOffersLoading = false;
+      state.favoriteOffers = action.payload;
+    },
+    [fetchFavorites.rejected.type]: (state: InitialState) => {
+      state.isFavoriteOffersLoading = false;
+      state.favoriteOffersLoadingError = true;
     },
     [fetchOffer.pending.type]: (state: InitialState) => {
       state.isCurrentOfferLoading = true;

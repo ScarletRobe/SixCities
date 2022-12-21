@@ -55,6 +55,14 @@ export const setFavoritesStatus = createAsyncThunk<{offer: Offer; withChangeCurr
   },
 );
 
+export const fetchFavorites = createAsyncThunk<Offer[]>(
+  'data/fetchFavorites',
+  async () => {
+    const { data } = await api.get<Offer[]>(APIRoute.Favorite);
+    return data;
+  },
+);
+
 export const fetchReviews = createAsyncThunk<Comment[], string>(
   'data/fetchComments',
   async (id, thunkAPI) => {
