@@ -2,7 +2,6 @@ import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStat
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
-import { findOffersByCity, findFavoriteOffers } from '../../utils';
 import { fetchOffers } from '../apiActions';
 import { Comment } from '../../types/comment';
 
@@ -11,7 +10,6 @@ type InitialState = {
   allOffers: Offer[];
   allOffersLoadingError: string | null;
   isAllOffersLoading: boolean;
-  offersByCity: Offer[];
   favoriteOffers: Offer[];
   favoriteOffersLoadingError: boolean | null;
   isFavoriteOffersLoading: boolean;
@@ -30,7 +28,6 @@ const initialState: InitialState = {
   allOffers: [],
   allOffersLoadingError: null,
   isAllOffersLoading: false,
-  offersByCity: [],
   favoriteOffers: [],
   favoriteOffersLoadingError: null,
   isFavoriteOffersLoading: false,
@@ -50,13 +47,6 @@ export const appSlice = createSlice({
   reducers: {
     city: (state, action: PayloadAction<City>) => {
       state.city = action.payload;
-      state.offersByCity = findOffersByCity(action.payload.name, state.allOffers);
-    },
-    offersByCity: (state, action: PayloadAction<Offer[]>) => {
-      state.offersByCity = action.payload;
-    },
-    favoriteOffers: (state, action: PayloadAction<Offer[]>) => {
-      state.favoriteOffers = action.payload;
     },
   },
   extraReducers: {
@@ -66,8 +56,6 @@ export const appSlice = createSlice({
     },
     [fetchOffers.fulfilled.type]: (state: InitialState, action: PayloadAction<Offer[]>) => {
       state.allOffers = action.payload;
-      state.offersByCity = findOffersByCity(state.city.name, action.payload);
-      state.favoriteOffers = findFavoriteOffers(action.payload);
       state.isAllOffersLoading = false;
     },
     [fetchOffers.rejected.type]: (state: InitialState, action: PayloadAction<string>) => {
@@ -148,6 +136,6 @@ export const appSlice = createSlice({
   }
 });
 
-export const {city, offersByCity, favoriteOffers} = appSlice.actions;
+export const {city} = appSlice.actions;
 
 export default appSlice.reducer;
