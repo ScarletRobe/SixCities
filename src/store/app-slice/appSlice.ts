@@ -1,4 +1,4 @@
-import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStatus, fetchFavorites } from './../apiActions';
+import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStatus, fetchFavorites, logout } from './../apiActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
@@ -141,6 +141,9 @@ export const appSlice = createSlice({
       } else {
         state.favoriteOffers = state.favoriteOffers.filter((off) => off.id !== offer.id);
       }
+    },
+    [logout.fulfilled.type]: (state: InitialState) => {
+      state.favoriteOffers = [];
     },
   }
 });

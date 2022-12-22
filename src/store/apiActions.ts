@@ -93,6 +93,7 @@ export const checkAuth = createAsyncThunk<UserData | null>(
   async(_, thunkAPI) => {
     try {
       const {data} = await api.get<UserData>(APIRoute.Login);
+      thunkAPI.dispatch(fetchFavorites());
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(null);
@@ -105,6 +106,7 @@ export const login = createAsyncThunk<UserData | null, AuthData>(
   async({login: email, password}, thunkAPI) => {
     try {
       const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+      thunkAPI.dispatch(fetchFavorites());
       saveToken(data.token);
       return data;
     } catch (error) {
@@ -115,8 +117,10 @@ export const login = createAsyncThunk<UserData | null, AuthData>(
 
 export const logout = createAsyncThunk(
   'user/logout',
-  async() => {
+  async(_, thunkAPI) => {
     await api.delete(APIRoute.Logout);
+    thunkAPI.dispatch(fetchOffers());
+    fetchOffers();
     dropToken();
   }
 );
