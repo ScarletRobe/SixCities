@@ -10,6 +10,7 @@ import { NewReviewData } from '../types/newReviewData';
 import { toast } from 'react-toastify';
 import { OfferData } from '../types/offerData';
 
+
 export const fetchOffers = createAsyncThunk(
   'data/fetchOffers',
   async (_, thunkAPI) => {
@@ -22,6 +23,11 @@ export const fetchOffers = createAsyncThunk(
   }
 );
 
+export const clearPropertyError = createAsyncThunk(
+  'data/clearPropertyError',
+  (_, thunkAPI) => thunkAPI.fulfillWithValue((null))
+);
+
 export const fetchOffer = createAsyncThunk<Offer, string>(
   'data/fetchOffer',
   async (id, thunkAPI) => {
@@ -29,6 +35,10 @@ export const fetchOffer = createAsyncThunk<Offer, string>(
       const response = await api.get<Offer>(`${APIRoute.Offers}/${id}`);
       return response.data;
     } catch (error) {
+      setTimeout(
+        () => { thunkAPI.dispatch(clearPropertyError()); },
+        2000,
+      );
       return thunkAPI.rejectWithValue(null);
     }
   }
@@ -120,7 +130,6 @@ export const logout = createAsyncThunk(
   async(_, thunkAPI) => {
     await api.delete(APIRoute.Logout);
     thunkAPI.dispatch(fetchOffers());
-    fetchOffers();
     dropToken();
   }
 );

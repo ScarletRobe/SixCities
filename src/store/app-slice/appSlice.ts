@@ -1,4 +1,4 @@
-import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStatus, fetchFavorites, logout } from './../apiActions';
+import { fetchNearOffers, fetchOffer, fetchReviews, sendReview, setFavoritesStatus, fetchFavorites, logout, clearPropertyError } from './../apiActions';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity } from '../../consts';
 import { City, Offer } from '../../types/offer';
@@ -85,6 +85,9 @@ export const appSlice = createSlice({
     [fetchOffer.rejected.type]: (state: InitialState) => {
       state.isCurrentOfferLoading = false;
       state.currentOfferLoadingError = true;
+    },
+    [clearPropertyError.fulfilled.type]: (state: InitialState) => {
+      state.currentOfferLoadingError = null;
     },
     [fetchNearOffers.pending.type]: (state: InitialState) => {
       state.isNearOffersLoading = true;
